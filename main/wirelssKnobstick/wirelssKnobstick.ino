@@ -29,6 +29,10 @@ void setup() {
   pinMode(echoPin, INPUT);
 
 }
+/// @brief calcule l'intensité du son en fonction de la distance perçue
+float calculSon(float distance){
+  return distance/2;
+}
 
 
 void loop() {
