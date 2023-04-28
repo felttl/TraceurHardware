@@ -9,7 +9,7 @@ void loop(){
   // 
   //analogWrite(9, 255);
 
-  int sonPercu = 0;
+  int sonPercu = 50000;
 
   digitalWrite(9, HIGH); // 1 clic
   delay(sonPercu);
