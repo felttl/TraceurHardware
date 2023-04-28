@@ -32,7 +32,7 @@ void setup() {
 }
 /// @brief calcule l'intensité du son en fonction de la distance perçue (d/2) le max est 205 donc et le min est 1)
 void Buzzer(float sonPercu){
-
+  // ajuster la fréquence en finction du son
   float freq = sonPercu;
   Serial.print("freq :");
   Serial.print(freq);
