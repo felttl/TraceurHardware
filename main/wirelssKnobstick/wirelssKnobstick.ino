@@ -42,6 +42,17 @@ void Buzzer(float sonPercu){
   digitalWrite(buzzerPin, LOW);
   delay(freq);  
 }
+/// @brief affiche les données
+void affichage(float freq, float distance_cm){
+  // affichage nb tours
+    Serial.print("nombre de tours: ");
+    Serial.print((int)(freq));
+    Serial.print("\n");  
+    // affichage dstance
+    Serial.print("distance: ");
+    Serial.print(distance_cm);
+    Serial.println(" cm");    
+}
 
 void loop() {
   // generate 10-microsecond pulse to TRIG pin
@@ -58,15 +69,11 @@ void loop() {
   if (distance_cm < 410.0 && distance_cm > 2.0){
     // print the value to Serial Monitor
 
-    Serial.print("distance: ");
-    Serial.print(distance_cm);
-    Serial.println(" cm");
+
     // buzzer
 
-    for (int i=0;i<(int)(10+(400-distance_cm)/20);i++){
-    Serial.print("nombre de tours: ");
-    Serial.print((int)(10+(400-distance_cm)/20));
-    Serial.print("\n");      
+    for (int i=0;i<(int)((400-distance_cm)/40);i++){
+        affichage((400-distance_cm)/40, distance_cm);
         Buzzer(distance_cm);
     }
   } else {
@@ -74,7 +81,7 @@ void loop() {
   }
 
   // 500ms = 2 times/seconds = 0.5 s
-  delay(500);
+  delay(300);
 }
 
 
