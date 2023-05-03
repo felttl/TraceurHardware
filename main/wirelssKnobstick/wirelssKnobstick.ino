@@ -12,16 +12,16 @@
  * Tutorial is available here: https://arduinogetstarted.com/tutorials/arduino-ultrasonic-sensor
  */
 
+// ports de branchements sur la carte arduino
 int trigPin = 7;    // TRIG pin
 int echoPin = 8;    // ECHO pin
 int buzzerPin = 9;  // buzzer output
 
 float duration_us, distance_cm;
-
+// initialisation 
 void setup() {
   // begin serial port
   Serial.begin (9600);
-
   // configure the trigger pin to output mode
   pinMode(trigPin, OUTPUT);
   // buzzer conf/init
@@ -39,7 +39,7 @@ void Buzzer(float sonPercu){
   Serial.print("\n");
   digitalWrite(buzzerPin, HIGH); // 1 clic
   delay(freq);
-  digitalWrite(buzzerPin, LOW);
+  digitalWrite(buzzerPin, LOW); // son
   delay(freq);  
 }
 /// @brief affiche les données
@@ -48,7 +48,7 @@ void affichage(float freq, float distance_cm){
     Serial.print("nombre de tours: ");
     Serial.print((int)(freq));
     Serial.print("\n");  
-    // affichage dstance
+    // affichage distance
     Serial.print("distance: ");
     Serial.print(distance_cm);
     Serial.println(" cm");    
@@ -61,17 +61,14 @@ void loop() {
   digitalWrite(trigPin, LOW);
 
   // measure duration of pulse from ECHO pin
+  // mesure de la durée de la pulsation 
   duration_us = pulseIn(echoPin, HIGH);
 
-  // calculate the distance
+  // calcul de la distance
   distance_cm = 0.017 * duration_us;
-  // distance entre 2 et 400 cm (2000 cm or more is false value)
+  // distance entre 2 et 400 cm (2000 cm lorsque les données sotn mal captées)
   if (distance_cm < 410.0 && distance_cm > 2.0){
-    // print the value to Serial Monitor
-
-
-    // buzzer
-
+    // boucle pour jouer une intensité sonore en fonction de la distance
     for (int i=0;i<(int)((400-distance_cm)/40);i++){
         affichage((400-distance_cm)/40, distance_cm);
         Buzzer(distance_cm);
@@ -81,6 +78,7 @@ void loop() {
   }
 
   // 500ms = 2 times/seconds = 0.5 s
+  // latence entre chaque ondes captées
   delay(300);
 }
 
