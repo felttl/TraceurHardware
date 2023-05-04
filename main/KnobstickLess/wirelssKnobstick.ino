@@ -20,12 +20,12 @@ int buzzerPin = 9;  // buzzer output
 float duration_us, distance_cm;
 // initialisation 
 void setup() {
-  // begin serial port
+  // begin serial port / initialise le port
   Serial.begin (9600);
-  // configure the trigger pin to output mode
-  pinMode(trigPin, OUTPUT);
+  // configure the trigger pin to output mode // configure les sorties et entrées
+  pinMode(trigPin, OUTPUT); 
   // buzzer conf/init
-	pinMode(buzzerPin, OUTPUT);
+  pinMode(buzzerPin, OUTPUT);
   // configure the echo pin to input mode
   pinMode(echoPin, INPUT);
 
@@ -37,9 +37,9 @@ void Buzzer(float sonPercu){
   Serial.print("freq :");
   Serial.print(freq);
   Serial.print("\n");
-  digitalWrite(buzzerPin, HIGH); // 1 clic
+  digitalWrite(buzzerPin, HIGH); // sortie du son fort
   delay(freq);
-  digitalWrite(buzzerPin, LOW); // son
+  digitalWrite(buzzerPin, LOW); // sortie du son faible
   delay(freq);  
 }
 /// @brief affiche les données
@@ -53,9 +53,9 @@ void affichage(float freq, float distance_cm){
     Serial.print(distance_cm);
     Serial.println(" cm");    
 }
-
+/// @brief boucle infinie
 void loop() {
-  // generate 10-microsecond pulse to TRIG pin
+  // generate 10-microsecond pulse to TRIG pin // créé une latence pour calculer la distance avec le parcours de l'onde
   digitalWrite(trigPin, HIGH);
   delayMicroseconds(10);
   digitalWrite(trigPin, LOW);
@@ -74,11 +74,12 @@ void loop() {
         Buzzer(distance_cm);
     }
   } else {
+    // afficahge du texte pour expliquer que la donnée n'est pas valide
     Serial.print("bad value (out of range)\n");
   }
 
-  // 500ms = 2 times/seconds = 0.5 s
-  // latence entre chaque ondes captées
+  // 500ms = 2 times/seconds = 0.5 s 
+  // latence entre chaque informations captées
   delay(300);
 }
 
